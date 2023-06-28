@@ -6,6 +6,7 @@ function Header() {
         height: '1.2px',
         width: '90vw%',
         marginLeft: '3%',
+        marginRight: '3%',
         marginTop: '-65px',
       };
 
