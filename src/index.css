@@ -11,3 +11,35 @@ code {
   font-family: source-code-pro, Menlo, Monaco, Consolas, 'Courier New',
     monospace;
 }
+
+.container {
+  position: absolute;
+  left: 0; 
+  width: 100%;
+  height: 100vh;
+  background-image: url('https://freight.cargo.site/w/842/q/94/i/17490d47525677a05077747f21ba34f43f470cb805c3c944e79fa0ea49c9a809/93061037.jpg');
+  background-position: center;
+  background-repeat: no-repeat;
+  background-size: cover;
+  overflow-x: hidden;
+}
+
+.headerContainer{
+  position: fixed;
+  top: 0;
+}
+
+.header{
+  color: #faff94;
+  white-space: nowrap;
+  overflow: hidden;
+  text-overflow: ellipsis;
+  font-family: 'Inter', sans-serif; 
+  text-align: left;
+  padding-left: 20px;
+  font-size: 100pt;
+  line-height: 0.9;
+}
+
+
+
