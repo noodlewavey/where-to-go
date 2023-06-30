@@ -1,7 +1,9 @@
 import logo from './logo.svg';
 import './App.css';
 import Header from './Header';
-import Divider from '@mui/material/Divider'
+import { useState } from 'react';
+import { AppBar, Toolbar, IconButton, Typography, Drawer, Box } from '@mui/material';
+import MenuIcon from '@mui/icons-material/Menu';
 
 
 function App() {
@@ -9,7 +11,18 @@ function App() {
     <div className="App">
       <div className="container">
         <Header />
-        <Divider variant="middle" />
+        <div className="outerbox">
+          <AppBar position="static" className="leftappBar" style={{width: '500px'}}>
+            <Toolbar>
+              <p>hello</p>
+            </Toolbar>
+          </AppBar>
+          <AppBar position="static" className="rightappBar" style={{width: '500px'}}>
+            <Toolbar>
+              <p>baoba</p>
+            </Toolbar>
+          </AppBar>
+        </div>
       </div>
     </div>
   );
