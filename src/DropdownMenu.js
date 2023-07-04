@@ -44,11 +44,7 @@ function DropdownMenu({languagesList}) {
       defaultValue="ENGLISH"
       helperText="Select your language"
       >
-        {currencies.map((option) => (
-            <MenuItem key={option.value} value={option.value}>
-              {option.label}
-            </MenuItem>
-          ))}
+
       </CustomTextField>
     </div>
   );
