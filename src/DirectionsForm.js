@@ -6,38 +6,74 @@ import Grid from '@mui/material/Grid';
 import AddLocationIcon from '@mui/icons-material/AddLocation';
 import AddLocationAltIcon from '@mui/icons-material/AddLocationAlt';
 import AirportShuttleIcon from '@mui/icons-material/AirportShuttle';
-import AddLocationAlt from '@mui/icons-material';
 import ChatBubbleOutlineIcon from '@mui/icons-material/ChatBubbleOutline';
 import DropdownMenu from './DropdownMenu';
+import { TextField } from '@mui/material';
 
 const Item = styled(Paper)(({ theme }) => ({
   backgroundColor: '#e4dfe0',
   padding: theme.spacing(1),
-  textAlign: 'left',
   color: theme.palette.text.secondary,
   fontFamily: 'Work Sans',
   border: '1px solid #000',
   display: 'flex',
-  alignItems: 'flex-start',
-  justifyContent: 'flex-start'
+  alignItems: 'center',
+  justifyContent: 'space-between',
+  '& > *': {
+    margin: theme.spacing(1),
+  },
 }));
 
+const CustomTextField = styled(TextField)(({ theme }) => ({
+  backgroundColor: '#e4dfe0',
+  borderRadius: '2px',
+  width: '300px',
+  fontFamily: 'Work Sans',
+  '& .MuiInputBase-input': {
+    fontFamily: 'Work Sans',
+    height: '6px',
+  },
+}));
 
 export default function DirectionsForm() {
   return (
     <Box sx={{ flexGrow: 1 }}>
       <Grid container spacing={1} justifyContent="center">
         <Grid item xs={11.6} sx={{ marginTop: '12px' }}>
-          <Item><AddLocationIcon></AddLocationIcon><strong>Origin:</strong></Item>
+          <Item>
+            <Box display="flex">
+              <AddLocationIcon />
+              <strong>Origin:</strong>
+            </Box>
+            <CustomTextField id="Origin" />
+          </Item>
         </Grid>
         <Grid item xs={11.6}>
-          <Item><AddLocationAltIcon></AddLocationAltIcon><strong> Destination:</strong></Item>
+          <Item>
+            <Box display="flex">
+              <AddLocationAltIcon />
+              <strong> Destination:</strong>
+            </Box>
+            <CustomTextField id="Destination" />
+          </Item>
         </Grid>
         <Grid item xs={11.6}>
-          <Item><AirportShuttleIcon></AirportShuttleIcon><strong>Transportation Mode:</strong></Item>
+          <Item>
+            <Box display="flex">
+              <AirportShuttleIcon />
+              <strong>Transportation Mode:</strong>
+            </Box>
+            <CustomTextField id="Mode" />
+          </Item>
         </Grid>
-        <Grid item xs={11.6}  sx={{ marginBottom: '12px' }}>
-          <Item><ChatBubbleOutlineIcon></ChatBubbleOutlineIcon><strong>Target Language:</strong><DropdownMenu /></Item>
+        <Grid item xs={11.6} sx={{ marginBottom: '12px' }}>
+          <Item>
+            <Box display="flex">
+              <ChatBubbleOutlineIcon />
+              <strong>Target Language:</strong>
+            </Box>
+            <DropdownMenu />
+          </Item>
         </Grid>
       </Grid>
     </Box>

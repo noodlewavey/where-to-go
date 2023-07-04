@@ -5,6 +5,7 @@ import AccordionSummary from '@mui/material/AccordionSummary';
 import AccordionDetails from '@mui/material/AccordionDetails';
 import Typography from '@mui/material/Typography';
 import ExpandMoreIcon from '@mui/icons-material/ExpandMore';
+import { createTheme, ThemeProvider } from '@mui/material/styles';
 
 const CustomAccordion = styled(Accordion)(({ theme }) => ({
   backgroundColor: '#e4dfe0',
@@ -19,6 +20,13 @@ const CustomAccordion = styled(Accordion)(({ theme }) => ({
   borderRadius: theme.shape.borderRadius,
 }));
 
+const theme = createTheme({
+  typography: {
+    fontFamily: 'Work Sans, sans-serif', // Set 'Work Sans' as the default font
+  },
+});
+
+
 const CustomAccordionSummary = styled(AccordionSummary)(({ theme }) => ({
   fontFamily: 'Work Sans', // Set "Work Sans" as the font family
 }));
@@ -26,6 +34,7 @@ const CustomAccordionSummary = styled(AccordionSummary)(({ theme }) => ({
 export default function Translation() {
   return (
     <div>
+      <ThemeProvider theme={theme}>
       <CustomAccordion>
         <CustomAccordionSummary
           expandIcon={<ExpandMoreIcon />}
@@ -65,6 +74,7 @@ export default function Translation() {
           <Typography>Disabled Accordion</Typography>
         </CustomAccordionSummary>
       </CustomAccordion>
+      </ThemeProvider>
     </div>
   );
 }
