@@ -5,6 +5,7 @@ import { useState } from 'react';
 import { Card, AppBar, Toolbar, IconButton, Typography, Drawer, Box } from '@mui/material';
 import MenuIcon from '@mui/icons-material/Menu';
 import DirectionsForm from './DirectionsForm';
+import Translation from './Translation';
 
 
 function App() {
@@ -63,7 +64,7 @@ function App() {
 </Toolbar>
 
             <Card className="customCard" sx={{ width: '580px', backgroundColor: '#e4dfe0'}}>
-              <p>Hello</p>
+              <Translation />
             </Card>
           </AppBar>
         </div>
