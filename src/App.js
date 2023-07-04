@@ -1,14 +1,34 @@
 import logo from './logo.svg';
 import './App.css';
 import Header from './Header';
-import { useState } from 'react';
+import { useState, useEffect } from 'react';
 import { Card, AppBar, Toolbar, IconButton, Typography, Drawer, Box } from '@mui/material';
 import MenuIcon from '@mui/icons-material/Menu';
 import DirectionsForm from './DirectionsForm';
 import Translation from './Translation';
+import axios from 'axios';
 
 
 function App() {
+
+  const ReactDOM = require('react-dom');
+
+  const [languagesList, setLanguagesList] = useState([]);
+
+  useEffect(() => {
+    axios.get('http://localhost:4000/languages')
+      .then(response => {
+        const languages = response.data;
+        setLanguagesList(languages);
+        console.log('Languages list: ', languages);
+        console.log('Language code', languages.languages[0].name)
+      })
+      .catch(error => {
+        console.error('Could not retrieve languages:', error);
+      });
+  }, []);
+
+
   return (
     <div className="App">
       <div className="container">
@@ -38,6 +58,7 @@ function App() {
 </Toolbar>
             <Card className="customCard" sx={{ width: '580px', backgroundColor: '#e4dfe0'}}>
               <DirectionsForm />
+
             </Card>
           </AppBar>
           <AppBar position="static" className="rightappBar" style={{width: '580px'}} sx={{borderRadius: '8px'}}>
