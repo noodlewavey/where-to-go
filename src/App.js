@@ -13,22 +13,6 @@ function App() {
 
   const ReactDOM = require('react-dom');
 
-  const [languagesList, setLanguagesList] = useState([]);
-
-  useEffect(() => {
-    axios.get('http://localhost:4000/languages')
-      .then(response => {
-        const languages = response.data;
-        setLanguagesList(languages);
-        console.log('Languages list: ', languages);
-        console.log('Language code', languages.languages[0].name)
-      })
-      .catch(error => {
-        console.error('Could not retrieve languages:', error);
-      });
-  }, []);
-
-
   return (
     <div className="App">
       <div className="container">
@@ -57,7 +41,7 @@ function App() {
     <p>WHERE TO?</p>
 </Toolbar>
             <Card className="customCard" sx={{ width: '580px', backgroundColor: '#e4dfe0'}}>
-              <DirectionsForm />
+              <DirectionsForm/>
 
             </Card>
           </AppBar>

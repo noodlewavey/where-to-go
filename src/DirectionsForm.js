@@ -39,7 +39,7 @@ const CustomTextField = styled(TextField)(({ theme }) => ({
   marginRight:'3px',
 }));
 
-export default function DirectionsForm({ languagesList }) {
+export default function DirectionsForm() {
   return (
     <Box sx={{ flexGrow: 1 }}>
       <Grid container spacing={1} justifyContent="center">
@@ -67,9 +67,9 @@ export default function DirectionsForm({ languagesList }) {
         <Grid item xs={11.6} sx={{ marginBottom: '12px' }}>
           <Item>
             <ChatBubbleOutlineIcon />
-            <strong style={{ marginRight: 'auto' }}>Target Lang:</strong>
-            <DropdownMenu languagesList={languagesList} />
-            <Button variant="outlined" endIcon={<SendIcon />} sx={{ color: 'black', height:'55px', marginTop:'-20px'}}>
+            <strong style={{ marginLeft: '-7px' }}>Target Lang:</strong>
+            <DropdownMenu />
+            <Button variant="outlined" endIcon={<SendIcon />} sx={{ color: 'black', height:'57px', marginTop:'-21px'}}>
               Send
             </Button>
           </Item>
@@ -78,3 +78,5 @@ export default function DirectionsForm({ languagesList }) {
     </Box>
   );
 }
+
+//margin-right:auto with flex-direction:row flex container...pushes item to rightmost side of container
