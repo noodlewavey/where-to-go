@@ -97,7 +97,6 @@ export default function DirectionsForm({setSelectedLanguage, setStart, setDest, 
               onChange={(e) => setMode(e.target.value)}
             >
               <MenuItem value="walking">Walking</MenuItem>
-              <MenuItem value="driving">Driving</MenuItem>
               <MenuItem value="transit">Transit</MenuItem>
               <MenuItem value="bicycling">Bicycling</MenuItem>
             </CustomSelect>

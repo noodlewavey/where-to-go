@@ -16,22 +16,25 @@ function App() {
   const [fieldEmpty, setFieldEmpty] = useState(false);
   const [directions, setDirections] = useState([]);
   const [htmlInstructions, setHtmlInstructions] = useState([]);
-  const [translatedDir, setTranslatedDir] = useState([]);
+  const [translatedDirections, setTranslatedDirections] = useState([]);
 
-  useEffect(() => {
-    if (selectedLanguage) {
-      fetchTranslation();
-    }
-  }, [selectedLanguage, directions]);
 
-  const fetchTranslation = async () => {
+  const fetchTranslation = async (htmlInstructions) => {
     try {
-      const response = await axios.post('http://localhost:4000/translate', {
-        q: 'Hello!',
-        source: 'en',
-        target: selectedLanguage,
-      });
-      console.log(response.data);
+      const transDir = [];
+  
+      for (const instruction of htmlInstructions) {
+        const response = await axios.post('http://localhost:4000/translate', {
+          q: instruction,
+          source: 'en',
+          target: selectedLanguage,
+        });
+  
+        transDir.push(response.data.translatedText);
+      }
+  
+      setTranslatedDirections(transDir);
+      console.log(transDir);
     } catch (error) {
       console.error(error);
     }
@@ -82,14 +85,13 @@ useEffect(() => {
   //now turning directions array into steps of html directions...new array
   //this array will be fed into translation to produce a translated array
   useEffect(() => {
-    if (Array.isArray(directions)) {
+    if (Array.isArray(directions) && directions.length > 0) {
       const instructions = directions.map(step => step.html_instructions);
       setHtmlInstructions(instructions);
-      //instructions works!
+      fetchTranslation(instructions);
     }
-  }, [directions]); 
+  }, [directions, selectedLanguage]);
 
-  
 
   return (
     <div className="App">
@@ -168,7 +170,11 @@ useEffect(() => {
               <p>DIRECTIONS HERE!</p>
             </Toolbar>
             <Card className="customCard" sx={{ width: '580px', backgroundColor: '#e4dfe0' }}>
-              <Translation />
+            {translatedDirections.length > 0 ? (
+                <Translation translatedDirections={translatedDirections} />
+              ) : (
+                <p style={{ marginLeft: '22px' }}>No translated directions available.</p>
+              )}
             </Card>
           </AppBar>
         </div>
