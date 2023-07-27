@@ -45,7 +45,7 @@ const DropdownMenu = ({ setSelectedLanguage }) => {
     const selectedLanguage = languagesList[0].languages.find(
       (language) => language.code === languageCode
     );
-    setSelectedLanguage(selectedLanguage);
+    setSelectedLanguage(languageCode);
   };
 
   return (
