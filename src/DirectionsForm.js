@@ -1,12 +1,6 @@
-import React, { useState } from 'react';
-import Box from '@mui/material/Box';
-<<<<<<< HEAD
-import TextField from '@mui/material/TextField';
-import MenuItem from '@mui/material/MenuItem';
+import * as React from 'react';
 import { styled } from '@mui/material/styles';
-import Button from '@mui/material/Button';
-import SendIcon from '@mui/icons-material/Send';
-=======
+import Box from '@mui/material/Box';
 import Paper from '@mui/material/Paper';
 import Grid from '@mui/material/Grid';
 import AddLocationIcon from '@mui/icons-material/AddLocation';
@@ -15,6 +9,14 @@ import AirportShuttleIcon from '@mui/icons-material/AirportShuttle';
 import ChatBubbleOutlineIcon from '@mui/icons-material/ChatBubbleOutline';
 import DropdownMenu from './DropdownMenu';
 import { TextField } from '@mui/material';
+import Button from '@mui/material/Button';
+import DeleteIcon from '@mui/icons-material/Delete';
+import SendIcon from '@mui/icons-material/Send';
+import Stack from '@mui/material/Stack';
+import { useState } from 'react';
+import { MenuItem, Select } from '@mui/material';
+
+
 
 const Item = styled(Paper)(({ theme }) => ({
   backgroundColor: '#e4dfe0',
@@ -24,17 +26,15 @@ const Item = styled(Paper)(({ theme }) => ({
   border: '1px solid #000',
   display: 'flex',
   alignItems: 'center',
-  justifyContent: 'space-between',
   '& > *': {
     margin: theme.spacing(1),
   },
 }));
->>>>>>> parent of 8570f06 (Added send button)
 
 const CustomTextField = styled(TextField)(({ theme }) => ({
   backgroundColor: '#e4dfe0',
   borderRadius: '2px',
-  width: '300px',
+  width: '250px',
   fontFamily: 'Work Sans',
   '& .MuiInputBase-input': {
     fontFamily: 'Work Sans',
@@ -43,50 +43,77 @@ const CustomTextField = styled(TextField)(({ theme }) => ({
   marginRight:'3px',
 }));
 
-export default function DirectionsForm() {
+const CustomSelect = styled(Select)(({ theme }) => ({
+  width: '245px', 
+  height: '35px',
+  fontFamily: 'Work Sans',
+}));
+
+
+export default function DirectionsForm({setSelectedLanguage, setStart, setDest, setMod, setFieldEmpty}){
+  const [thisLang, setThislang] = useState('');
+  const [begin, setBegin] = useState('');
+  const [destination, setDestination] = useState('');
+  const [mode, setMode] = useState('');
+
+  const handleSendButtonClick=()=>{
+    console.log("from directionsform", thisLang)
+    console.log("ORIGIN:", begin);
+    console.log("destination", destination);
+    console.log("mode", mode);
+
+    if (thisLang===''|| begin===''||destination===''||mode===''){
+      setFieldEmpty(true);
+    }
+    setSelectedLanguage(thisLang);
+    setStart(begin);
+    setDest(destination);
+    setMod(mode);
+  }
+
   return (
     <Box sx={{ flexGrow: 1 }}>
       <Grid container spacing={1} justifyContent="center">
         <Grid item xs={11.6} sx={{ marginTop: '12px' }}>
           <Item>
-            <Box display="flex">
-              <AddLocationIcon />
-              <strong>Origin:</strong>
-            </Box>
-            <CustomTextField id="Origin" />
+            <AddLocationIcon />
+            <strong style={{ marginRight: 'auto' }}>Origin:</strong>
+            <CustomTextField id="Origin" value={begin} onChange={(e) => setBegin(e.target.value)}/>
           </Item>
         </Grid>
         <Grid item xs={11.6}>
           <Item>
-            <Box display="flex">
-              <AddLocationAltIcon />
-              <strong> Destination:</strong>
-            </Box>
-            <CustomTextField id="Destination" />
+            <AddLocationAltIcon />
+            <strong style={{ marginRight: 'auto' }}>Destination:</strong>
+            <CustomTextField id="Destination"  value={destination} onChange={(e) => setDestination(e.target.value)}/>
           </Item>
         </Grid>
         <Grid item xs={11.6}>
-          <Item>
-            <Box display="flex">
-              <AirportShuttleIcon />
-              <strong>Transportation Mode:</strong>
-            </Box>
-            <CustomTextField id="Mode" />
+        <Item>
+            <AirportShuttleIcon />
+            <strong style={{ marginRight: 'auto' }}>Transport Mode:</strong>
+            <CustomSelect
+              value={mode}
+              onChange={(e) => setMode(e.target.value)}
+            >
+              <MenuItem value="walking">Walking</MenuItem>
+              <MenuItem value="driving">Driving</MenuItem>
+              <MenuItem value="transit">Transit</MenuItem>
+              <MenuItem value="bicycling">Bicycling</MenuItem>
+            </CustomSelect>
           </Item>
         </Grid>
         <Grid item xs={11.6} sx={{ marginBottom: '12px' }}>
           <Item>
-            <Box display="flex">
-              <ChatBubbleOutlineIcon />
-              <strong>Target Language:</strong>
-            </Box>
-            <DropdownMenu />
+            <ChatBubbleOutlineIcon style={{marginTop: '-10px'}}/>
+            <strong style={{ marginRight: '-7px', marginTop: '-6px'}}>Target Lang:</strong>
+            <DropdownMenu setSelectedLanguage={setThislang}/>
+            <Button variant="outlined" endIcon={<SendIcon />} sx={{ color: 'black', height:'57px', marginTop:'-22px', marginLeft:'3px'}} onClick={handleSendButtonClick}>
+              Send
+            </Button>
           </Item>
         </Grid>
       </Grid>
->>>>>>> parent of 8570f06 (Added send button)
     </Box>
   );
-};
-
-export default DirectionsForm;
+}

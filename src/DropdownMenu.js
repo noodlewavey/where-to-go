@@ -15,7 +15,7 @@ const CustomTextField = styled(TextField)(({ theme }) => ({
   },
 }));
 
-const DropdownMenu = ({ onLanguageSelected }) => {
+const DropdownMenu = ({ setSelectedLanguage }) => {
   const languagesList = [
     {
       languages: [
@@ -45,7 +45,7 @@ const DropdownMenu = ({ onLanguageSelected }) => {
     const selectedLanguage = languagesList[0].languages.find(
       (language) => language.code === languageCode
     );
-    onLanguageSelected(selectedLanguage);
+    setSelectedLanguage(selectedLanguage);
   };
 
   return (
