@@ -14,13 +14,15 @@ function App() {
   const [showErrorAlert, setShowErrorAlert] = useState(false);
   const [showDialog, setShowDialog] = useState(false);
   const [fieldEmpty, setFieldEmpty] = useState(false);
-  const [directions, setDirections] = useState('');
+  const [directions, setDirections] = useState([]);
+  const [htmlInstructions, setHtmlInstructions] = useState([]);
+  const [translatedDir, setTranslatedDir] = useState([]);
 
   useEffect(() => {
     if (selectedLanguage) {
       fetchTranslation();
     }
-  }, [selectedLanguage]);
+  }, [selectedLanguage, directions]);
 
   const fetchTranslation = async () => {
     try {
@@ -37,7 +39,7 @@ function App() {
 
 
 useEffect(() => {
-
+//this is to fetch directions from the user input
   if (origin && destination && mode) {
     const fetchData = async () => {
       try {
@@ -76,6 +78,17 @@ useEffect(() => {
   const handleCloseFieldEmptyDialog = () => {
     setFieldEmpty(false);
   };
+
+  //now turning directions array into steps of html directions...new array
+  //this array will be fed into translation to produce a translated array
+  useEffect(() => {
+    if (Array.isArray(directions)) {
+      const instructions = directions.map(step => step.html_instructions);
+      setHtmlInstructions(instructions);
+      //instructions works!
+    }
+  }, [directions]); 
+
   
 
   return (
