@@ -5,6 +5,7 @@ import { Card, AppBar, Toolbar, Dialog, IconButton } from '@mui/material';
 import DirectionsForm from './DirectionsForm';
 import Translation from './Translation';
 import CloseIcon from '@mui/icons-material/Close';
+import {Parser as HTMLToReactParser} from 'html-to-react';
 
 function App() {
   const [selectedLanguage, setSelectedLanguage] = useState('');
@@ -19,6 +20,8 @@ function App() {
   const [translatedDirections, setTranslatedDirections] = useState([]);
   const [streetLocations, setStreetLocations] = useState([]);
 
+
+const htmlToReactParser = new HTMLToReactParser();
 
   const fetchTranslation = async (htmlInstructions) => {
     try {
@@ -85,11 +88,14 @@ useEffect(() => {
     setFieldEmpty(false);
   };
 
-  //now turning directions array into steps of html directions...new array
-  //this array will be fed into translation to produce a translated array
+  const removeHtmlTags = (html) => {
+    const regex = /(<([^>]+)>)/gi;
+    return html.replace(regex, '');
+  };
+
   useEffect(() => {
     if (Array.isArray(directions) && directions.length > 0) {
-      const instructions = directions.map(step => step.html_instructions);
+      const instructions = directions.map((step) => removeHtmlTags(step.html_instructions));
       setHtmlInstructions(instructions);
       fetchTranslation(instructions);
     }

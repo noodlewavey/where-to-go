@@ -8,7 +8,8 @@ import ExpandMoreIcon from '@mui/icons-material/ExpandMore';
 import { createTheme, ThemeProvider } from '@mui/material/styles';
 import { useState } from 'react';
 import axios from 'axios';
-import HTMLRenderer from './HTMLRenderer';
+import { useEffect } from 'react';
+import {Parser as HTMLToReactParser} from 'html-to-react';
 
 const CustomAccordion = styled(Accordion)(({ theme }) => ({
   backgroundColor: '#e4dfe0',
@@ -35,6 +36,7 @@ const CustomAccordionSummary = styled(AccordionSummary)(({ theme }) => ({
 
 export default function Translation({translatedDir, directions, locations}) {
 
+  const htmlToReactParser = new HTMLToReactParser();
 
   const [imageUrls, setImageUrls] = useState([]);
 
@@ -60,6 +62,13 @@ export default function Translation({translatedDir, directions, locations}) {
     }
   };
 
+  useEffect(() => {
+    if (Array.isArray(translatedDir) && translatedDir.length > 0) {
+      const direction = translatedDir[0];
+      console.log(typeof direction);
+    }
+  }, [translatedDir]);
+
   return (
     <div>
       <ThemeProvider theme={theme}>
@@ -73,7 +82,7 @@ export default function Translation({translatedDir, directions, locations}) {
               <Typography>{`Step ${index + 1}`}</Typography>
             </CustomAccordionSummary>
             <AccordionDetails>
-            <HTMLRenderer htmlContent={direction} />
+              {htmlToReactParser.parse(direction)}
             </AccordionDetails>
           </CustomAccordion>
         ))}
