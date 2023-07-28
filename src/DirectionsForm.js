@@ -107,7 +107,7 @@ export default function DirectionsForm({setSelectedLanguage, setStart, setDest, 
             <ChatBubbleOutlineIcon style={{marginTop: '-10px'}}/>
             <strong style={{ marginRight: '6px', marginTop: '-6px'}}>Target Lang:</strong>
             <DropdownMenu setSelectedLanguage={setThislang}/>
-            <Button variant="outlined" endIcon={<SendIcon />} sx={{ color: 'black', height:'57px', marginTop:'-22px', marginLeft:'3px'}} onClick={handleSendButtonClick}>
+            <Button variant="outlined" endIcon={<SendIcon />} sx={{ color: 'black', height:'57px', marginTop:'-22px', marginLeft:'5px', marginRight:'5px'}} onClick={handleSendButtonClick}>
               Send
             </Button>
           </Item>

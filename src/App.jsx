@@ -17,6 +17,7 @@ function App() {
   const [directions, setDirections] = useState([]);
   const [htmlInstructions, setHtmlInstructions] = useState([]);
   const [translatedDirections, setTranslatedDirections] = useState([]);
+  const [streetLocations, setStreetLocations] = useState([]);
 
 
   const fetchTranslation = async (htmlInstructions) => {
@@ -34,7 +35,9 @@ function App() {
       }
   
       setTranslatedDirections(transDir);
-      console.log(transDir);
+      console.log(transDir[0]);
+      const sentence = transDir[0];
+      console.log(typeof sentence);
     } catch (error) {
       console.error(error);
     }
@@ -92,6 +95,12 @@ useEffect(() => {
     }
   }, [directions, selectedLanguage]);
 
+  useEffect(() => {
+    if (Array.isArray(directions) && directions.length > 0) {
+      const locations = directions.map((step) => `${step.end_location.lat}, ${step.end_location.lng}`);
+      setStreetLocations(locations);
+    }
+  }, [directions, selectedLanguage]);
 
   return (
     <div className="App">
@@ -171,7 +180,7 @@ useEffect(() => {
             </Toolbar>
             <Card className="customCard" sx={{ width: '580px', backgroundColor: '#e4dfe0' }}>
             {translatedDirections.length > 0 ? (
-                <Translation translatedDirections={translatedDirections} />
+                <Translation translatedDir={translatedDirections} directions={directions} locations={streetLocations}/>
               ) : (
                 <p style={{ marginLeft: '22px' }}>No translated directions available.</p>
               )}

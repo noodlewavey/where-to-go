@@ -6,6 +6,9 @@ import AccordionDetails from '@mui/material/AccordionDetails';
 import Typography from '@mui/material/Typography';
 import ExpandMoreIcon from '@mui/icons-material/ExpandMore';
 import { createTheme, ThemeProvider } from '@mui/material/styles';
+import { useState } from 'react';
+import axios from 'axios';
+import HTMLRenderer from './HTMLRenderer';
 
 const CustomAccordion = styled(Accordion)(({ theme }) => ({
   backgroundColor: '#e4dfe0',
@@ -30,11 +33,37 @@ const CustomAccordionSummary = styled(AccordionSummary)(({ theme }) => ({
   fontFamily: 'Work Sans', // Set "Work Sans" as the font family
 }));
 
-export default function Translation({ translatedDirections, htmlInstructions }) {
+export default function Translation({translatedDir, directions, locations}) {
+
+
+  const [imageUrls, setImageUrls] = useState([]);
+
+  const fetchImages = async (locations) => {
+    try {
+      const imageLinks = [];
+  
+      for (const sublocation of locations ) {
+        const response = await axios.post('http://localhost:4000/streetview', {
+          location: sublocation,
+        });
+        const imageData = response.data;
+
+      const dataUrl = `data:image/jpeg;base64,${Buffer.from(imageData).toString('base64')}`;
+  
+        imageLinks.push(dataUrl);
+      }
+  
+      setImageUrls(imageLinks);
+      console.log(imageLinks);
+    } catch (error) {
+      console.error(error);
+    }
+  };
+
   return (
     <div>
       <ThemeProvider theme={theme}>
-        {translatedDirections.map((direction, index) => (
+        {translatedDir.map((direction, index) => (
           <CustomAccordion key={index}>
             <CustomAccordionSummary
               expandIcon={<ExpandMoreIcon />}
@@ -44,7 +73,7 @@ export default function Translation({ translatedDirections, htmlInstructions }) 
               <Typography>{`Step ${index + 1}`}</Typography>
             </CustomAccordionSummary>
             <AccordionDetails>
-            <Typography dangerouslySetInnerHTML={{ __html: direction }} />
+            <HTMLRenderer htmlContent={direction} />
             </AccordionDetails>
           </CustomAccordion>
         ))}
@@ -52,3 +81,6 @@ export default function Translation({ translatedDirections, htmlInstructions }) 
     </div>
   );
 }
+
+
+//
