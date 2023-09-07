@@ -1,11 +1,13 @@
 import React, { useState, useEffect } from 'react';
 import axios from 'axios';
 import Header from './Header';
-import { Card, AppBar, Toolbar, Dialog, IconButton } from '@mui/material';
+import { Card, AppBar, Toolbar, Dialog, IconButton, Box, CircularProgress } from '@mui/material';
 import DirectionsForm from './DirectionsForm';
 import Translation from './Translation';
 import CloseIcon from '@mui/icons-material/Close';
 import {Parser as HTMLToReactParser} from 'html-to-react';
+
+
 
 function App() {
   const [selectedLanguage, setSelectedLanguage] = useState('');
@@ -19,32 +21,59 @@ function App() {
   const [htmlInstructions, setHtmlInstructions] = useState([]);
   const [translatedDirections, setTranslatedDirections] = useState([]);
   const [streetLocations, setStreetLocations] = useState([]);
+  const [loading, setLoading] = useState(false);
 
 
 const htmlToReactParser = new HTMLToReactParser();
 
+  // const fetchTranslation = async (htmlInstructions) => {
+  //   try {
+  //     const transDir = [];
+  
+  //     for (const instruction of htmlInstructions) {
+  //       const response = await axios.post('http://localhost:4000/translate', {
+  //         q: instruction,
+  //         source: 'en',
+  //         target: selectedLanguage,
+  //       });
+  
+  //       transDir.push(response.data.translatedText);
+  //     }
+  
+  //     setTranslatedDirections(transDir);
+  //     console.log(transDir[0]);
+  //     const sentence = transDir[0];
+  //     console.log(typeof sentence);
+  //   } catch (error) {
+  //     console.error(error);
+  //   }
+  // };
+
   const fetchTranslation = async (htmlInstructions) => {
     try {
-      const transDir = [];
-  
-      for (const instruction of htmlInstructions) {
-        const response = await axios.post('http://localhost:4000/translate', {
+      setLoading(true);
+      // 1. Create an array of promises for each instruction
+      const translationPromises = htmlInstructions.map(instruction => {
+        return axios.post('http://localhost:4000/translate', {
           q: instruction,
           source: 'en',
           target: selectedLanguage,
-        });
+        }).then(response => response.data.translatedText);  // Extract the translatedText from the response
+      });
   
-        transDir.push(response.data.translatedText);
-      }
+      // 2. Use Promise.all() to wait for all promises to resolve
+      const transDir = await Promise.all(translationPromises);
   
+      // 3. Update state with all the translated directions
       setTranslatedDirections(transDir);
-      console.log(transDir[0]);
-      const sentence = transDir[0];
-      console.log(typeof sentence);
+  
     } catch (error) {
       console.error(error);
+    } finally {
+      setLoading(false); //end loading when translation complete 
     }
   };
+  
 
 
 useEffect(() => {
@@ -185,11 +214,17 @@ useEffect(() => {
               <p>DIRECTIONS HERE!</p>
             </Toolbar>
             <Card className="customCard" sx={{ width: '580px', backgroundColor: '#e4dfe0' }}>
-            {translatedDirections.length > 0 ? (
-                <Translation translatedDir={translatedDirections} directions={directions} locations={streetLocations}/>
-              ) : (
-                <p style={{ marginLeft: '22px' }}>No translated directions available.</p>
-              )}
+            {
+  loading ? (
+    <Box sx={{ display: 'flex', justifyContent: 'center', padding: '20px' }}>
+      <CircularProgress />
+    </Box>
+  ) : translatedDirections.length > 0 ? (
+    <Translation translatedDir={translatedDirections} directions={directions} locations={streetLocations}/>
+  ) : (
+    <p style={{ marginLeft: '22px' }}>No translated directions available.</p>
+  )
+}
             </Card>
           </AppBar>
         </div>
