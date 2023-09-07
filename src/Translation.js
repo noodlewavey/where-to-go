@@ -10,6 +10,7 @@ import { useState } from 'react';
 import axios from 'axios';
 import { useEffect } from 'react';
 import {Parser as HTMLToReactParser} from 'html-to-react';
+import { Button, Popover, Box } from '@mui/material';
 
 const CustomAccordion = styled(Accordion)(({ theme }) => ({
   backgroundColor: '#e4dfe0',
@@ -37,30 +38,21 @@ const CustomAccordionSummary = styled(AccordionSummary)(({ theme }) => ({
 export default function Translation({translatedDir, directions, locations}) {
 
   const htmlToReactParser = new HTMLToReactParser();
+  const [openPopoverIndex, setOpenPopoverIndex] = useState(null);
+  const [anchorEl, setAnchorEl] = useState(null);
 
-  const [imageUrls, setImageUrls] = useState([]);
 
-  const fetchImages = async (locations) => {
-    try {
-      const imageLinks = [];
-  
-      for (const sublocation of locations ) {
-        const response = await axios.get('http://localhost:4000/streetview', {
-          location: sublocation,
-        });
-        const imageData = response.data;
-
-      const dataUrl = `data:image/jpeg;base64,${Buffer.from(imageData).toString('base64')}`;
-  
-        imageLinks.push(dataUrl);
-      }
-  
-      setImageUrls(imageLinks);
-      console.log(imageLinks);
-    } catch (error) {
-      console.error(error);
-    }
+  const handlePopoverOpen = (event, index) => {
+    setAnchorEl(event.currentTarget);
+    setOpenPopoverIndex(index);
   };
+
+  const handlePopoverClose = () => {
+    setAnchorEl(null);
+    setOpenPopoverIndex(null);
+  };
+
+
 
   useEffect(() => {
     if (Array.isArray(translatedDir) && translatedDir.length > 0) {
@@ -83,7 +75,30 @@ export default function Translation({translatedDir, directions, locations}) {
               <Typography>{`Step ${index + 1}`}</Typography>
             </CustomAccordionSummary>
             <AccordionDetails>
+            {htmlToReactParser.parse(direction)}
+            <Box sx={{display: 'flex', justifyContent: 'flex-end'}}>
+              <Button
+              variant="outlined"
+              onClick={(e) => handlePopoverOpen(e, index)}
+              >
+                SEE IMAGE
+              </Button>
+              </Box>
+              <Popover
+              open={openPopoverIndex === index}
+              anchorEl={anchorEl}
+              onClose={handlePopoverClose}
+              anchorOrigin={{
+                vertical: 'bottom',
+                horizontal: 'left',
+              }}
+              transformOrigin={{
+                verticla: 'top',
+                horizontal: 'left',
+              }}
+              >
               {htmlToReactParser.parse(direction)}
+              </Popover>
             </AccordionDetails>
           </CustomAccordion>
         ))}
