@@ -4,7 +4,7 @@ import MenuItem from '@mui/material/MenuItem';
 import { styled } from '@mui/material/styles';
 
 const CustomTextField = styled(TextField)(({ theme }) => ({
-  backgroundColor: '#e4dfe0',
+  backgroundColor: 'transparent',
   borderRadius: '2px',
   width: '300px',
   fontFamily: 'Work Sans',
