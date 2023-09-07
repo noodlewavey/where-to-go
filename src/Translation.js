@@ -45,7 +45,7 @@ export default function Translation({translatedDir, directions, locations}) {
       const imageLinks = [];
   
       for (const sublocation of locations ) {
-        const response = await axios.post('http://localhost:4000/streetview', {
+        const response = await axios.get('http://localhost:4000/streetview', {
           location: sublocation,
         });
         const imageData = response.data;
@@ -68,6 +68,7 @@ export default function Translation({translatedDir, directions, locations}) {
       console.log(typeof direction);
     }
   }, [translatedDir]);
+
 
   return (
     <div>

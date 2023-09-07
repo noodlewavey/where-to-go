@@ -22,6 +22,8 @@ function App() {
   const [translatedDirections, setTranslatedDirections] = useState([]);
   const [streetLocations, setStreetLocations] = useState([]);
   const [loading, setLoading] = useState(false);
+  
+  const [imageUrls, setImageUrls] = useState([]);
 
 
 const htmlToReactParser = new HTMLToReactParser();
@@ -136,6 +138,46 @@ useEffect(() => {
       setStreetLocations(locations);
     }
   }, [directions, selectedLanguage]);
+
+
+  const fetchImages = async (locations) => {
+    try {
+      const imageLinks = [];
+  
+      for (const sublocation of locations ) {
+        const response = await axios.get('http://localhost:4000/streetview', {
+          params: { location: sublocation },
+          responseType: 'arraybuffer'  // Ensure you get the data as an array buffer
+        });
+
+        // Convert ArrayBuffer to base64
+        const b64Encoded = btoa(
+            new Uint8Array(response.data).reduce(
+                (data, byte) => data + String.fromCharCode(byte),
+                '',
+            ),
+        );
+
+        const dataUrl = `data:image/jpeg;base64,${b64Encoded}`;
+  
+        imageLinks.push(dataUrl);
+      }
+  
+      setImageUrls(imageLinks);
+      console.log(imageLinks);
+    } catch (error) {
+      console.error(error);
+    }
+};
+
+
+  useEffect(() => {
+    if (streetLocations && streetLocations.length > 0) {
+        fetchImages(streetLocations);
+    }
+}, [streetLocations]);
+//once streetlocations are fetched, images are fetched 
+
 
   return (
     <div className="App">
