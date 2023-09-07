@@ -115,7 +115,7 @@ useEffect(() => {
 
   useEffect(() => {
     if (Array.isArray(directions) && directions.length > 0) {
-      const locations = directions.map((step) => `${step.end_location.lat}, ${step.end_location.lng}`);
+      const locations = directions.map((step) => `${step.start_location.lat}, ${step.end_location.lng}`);
       setStreetLocations(locations);
     }
   }, [directions, selectedLanguage]);

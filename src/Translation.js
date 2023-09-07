@@ -74,21 +74,21 @@ export default function Translation({translatedDir, directions, locations, image
             >
               <Typography>{`Step ${index + 1}`}</Typography>
             </CustomAccordionSummary>
+          
             <AccordionDetails>
-            {htmlToReactParser.parse(direction)}
-            <Box sx={{
-    position: 'absolute', 
-    right: 0, 
-    top: '50%', 
-    transform: 'translateY(-50%)'
-  }}>
-              <Button
-              variant="outlined"
-              onClick={(e) => handlePopoverOpen(e, index)}
-              >
-                SEE IMAGE
-              </Button>
-              </Box>
+            <div style={{ maxWidth: '85%' }}>
+                {htmlToReactParser.parse(direction)}
+            </div>
+
+            <Box style={{ display: 'flex', justifyContent: 'space-between', position: 'relative' }}>
+            <Button
+      variant="outlined"
+      onClick={(e) => handlePopoverOpen(e, index)}
+      style={{marginTop: '1rem', marginLeft: '18rem'}}
+    >
+      SEE IMAGE
+    </Button>
+    </Box>
               <Popover
               open={openPopoverIndex === index}
               anchorEl={anchorEl}
