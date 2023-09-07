@@ -35,7 +35,7 @@ const CustomAccordionSummary = styled(AccordionSummary)(({ theme }) => ({
   fontFamily: 'Work Sans', // Set "Work Sans" as the font family
 }));
 
-export default function Translation({translatedDir, directions, locations}) {
+export default function Translation({translatedDir, directions, locations, images}) {
 
   const htmlToReactParser = new HTMLToReactParser();
   const [openPopoverIndex, setOpenPopoverIndex] = useState(null);
@@ -97,7 +97,7 @@ export default function Translation({translatedDir, directions, locations}) {
                 horizontal: 'left',
               }}
               >
-              {htmlToReactParser.parse(direction)}
+               <img src={images[index]} alt={`Step ${index + 1}`} style={{maxWidth: '100%'}} />
               </Popover>
             </AccordionDetails>
           </CustomAccordion>
