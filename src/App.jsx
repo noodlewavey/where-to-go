@@ -105,6 +105,9 @@ useEffect(() => {
     return html.replace(regex, '');
   };
 
+  //this is to set instructions after directions array is retrieved
+  //set instructions then fetch translation of instructions 
+
   useEffect(() => {
     if (Array.isArray(directions) && directions.length > 0) {
       const instructions = directions.map((step) => removeHtmlTags(step.html_instructions));
@@ -113,6 +116,8 @@ useEffect(() => {
     }
   }, [directions, selectedLanguage]);
 
+
+  //see if i can combine these two useeffects...this and prev
   useEffect(() => {
     if (Array.isArray(directions) && directions.length > 0) {
       const locations = directions.map((step) => `${step.start_location.lat}, ${step.end_location.lng}`);
@@ -152,6 +157,7 @@ useEffect(() => {
     }
 };
 
+//maybe combine this all into one useeffect?
 
   useEffect(() => {
     if (streetLocations && streetLocations.length > 0) {
@@ -161,7 +167,7 @@ useEffect(() => {
 }, [streetLocations]);
 //once streetlocations are fetched, images are fetched 
 
-
+//performance vs efficiency tradeoff
   return (
     <div className="App">
       <div className="container">
