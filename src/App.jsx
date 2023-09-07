@@ -28,28 +28,7 @@ function App() {
 
 const htmlToReactParser = new HTMLToReactParser();
 
-  // const fetchTranslation = async (htmlInstructions) => {
-  //   try {
-  //     const transDir = [];
-  
-  //     for (const instruction of htmlInstructions) {
-  //       const response = await axios.post('http://localhost:4000/translate', {
-  //         q: instruction,
-  //         source: 'en',
-  //         target: selectedLanguage,
-  //       });
-  
-  //       transDir.push(response.data.translatedText);
-  //     }
-  
-  //     setTranslatedDirections(transDir);
-  //     console.log(transDir[0]);
-  //     const sentence = transDir[0];
-  //     console.log(typeof sentence);
-  //   } catch (error) {
-  //     console.error(error);
-  //   }
-  // };
+
 
   const fetchTranslation = async (htmlInstructions) => {
     try {
@@ -159,6 +138,7 @@ useEffect(() => {
         );
 
         const dataUrl = `data:image/jpeg;base64,${b64Encoded}`;
+        //hopefully this works 
   
         imageLinks.push(dataUrl);
       }
