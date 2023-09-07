@@ -24,6 +24,8 @@ function App() {
   const [loading, setLoading] = useState(false);
   
   const [imageUrls, setImageUrls] = useState([]);
+  //this is an array of base64-encoded data URIs....
+
 
 
 const htmlToReactParser = new HTMLToReactParser();
@@ -154,6 +156,7 @@ useEffect(() => {
   useEffect(() => {
     if (streetLocations && streetLocations.length > 0) {
         fetchImages(streetLocations);
+        console.log("this is street location ", streetLocations[0]);
     }
 }, [streetLocations]);
 //once streetlocations are fetched, images are fetched 
@@ -242,7 +245,7 @@ useEffect(() => {
       <CircularProgress />
     </Box>
   ) : translatedDirections.length > 0 ? (
-    <Translation translatedDir={translatedDirections} directions={directions} locations={streetLocations}/>
+    <Translation translatedDir={translatedDirections} directions={directions} locations={streetLocations} images={imageUrls}/>
   ) : (
     <p style={{ marginLeft: '22px' }}>No translated directions available.</p>
   )

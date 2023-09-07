@@ -76,7 +76,12 @@ export default function Translation({translatedDir, directions, locations, image
             </CustomAccordionSummary>
             <AccordionDetails>
             {htmlToReactParser.parse(direction)}
-            <Box sx={{display: 'flex', justifyContent: 'flex-end'}}>
+            <Box sx={{
+    position: 'absolute', 
+    right: 0, 
+    top: '50%', 
+    transform: 'translateY(-50%)'
+  }}>
               <Button
               variant="outlined"
               onClick={(e) => handlePopoverOpen(e, index)}
@@ -97,7 +102,10 @@ export default function Translation({translatedDir, directions, locations, image
                 horizontal: 'left',
               }}
               >
+                {
+                  images&&
                <img src={images[index]} alt={`Step ${index + 1}`} style={{maxWidth: '100%'}} />
+                }
               </Popover>
             </AccordionDetails>
           </CustomAccordion>
@@ -108,4 +116,4 @@ export default function Translation({translatedDir, directions, locations, image
 }
 
 
-//
+//some kind of bug here
