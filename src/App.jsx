@@ -37,7 +37,7 @@ const htmlToReactParser = new HTMLToReactParser();
       setLoading(true);
       // 1. Create an array of promises for each instruction
       const translationPromises = htmlInstructions.map(instruction => {
-        return axios.post('http://localhost:4000/translate', {
+        return axios.post('https://google-maps-api-55f451b25289.herokuapp.com/translate', {
           q: instruction,
           source: 'en',
           target: selectedLanguage,
@@ -68,7 +68,7 @@ useEffect(() => {
         console.log(destination);
         console.log(origin);
         
-        const response = await axios.post('http://localhost:4000/directions', {
+        const response = await axios.post('https://google-maps-api-55f451b25289.herokuapp.com/directions', {
           origin: origin,
           destination: destination,
           mode: mode,
@@ -131,7 +131,7 @@ useEffect(() => {
       const imageLinks = [];
   
       for (const sublocation of locations ) {
-        const response = await axios.get('http://localhost:4000/streetview', {
+        const response = await axios.get('https://google-maps-api-55f451b25289.herokuapp.com/streetview', {
           params: { location: sublocation },
           responseType: 'arraybuffer'  // Ensure you get the data as an array buffer
         });

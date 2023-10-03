@@ -54,6 +54,7 @@ export default function Translation({translatedDir, directions, locations, image
 
 
 
+  //this is test code 
   useEffect(() => {
     if (Array.isArray(translatedDir) && translatedDir.length > 0) {
       const direction = translatedDir[0];
